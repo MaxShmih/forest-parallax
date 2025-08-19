@@ -1,9 +1,11 @@
-window.addEventListener('scroll', e => {
-    document.body.style.cssText += `--scrollTop: ${this.scrollY}px`
-})
-
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-ScrollSmoother.create({
+
+const smoother = ScrollSmoother.create({
     wrapper: '.wrapper',
     content: '.content'
-})
+});
+
+// Update CSS variable efficiently using GSAP's ticker
+gsap.ticker.add(() => {
+    document.body.style.setProperty('--scrollTop', `${smoother.scrollTop()}px`);
+});
